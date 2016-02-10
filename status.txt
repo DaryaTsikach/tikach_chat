@@ -1,0 +1,5 @@
+.idea/
+Project1.iml
+
+On branch master
+nothing to commit, working directory clean
