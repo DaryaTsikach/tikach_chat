@@ -1,0 +1,5 @@
+commit 47d9e5753934ecf7eec1d4ce12580b293efe6bf9
+Author: DaryaTsikach <darja98@yahoo.com>
+Date:   Wed Feb 10 17:59:48 2016 +0200
+
+    Add .gitignore
