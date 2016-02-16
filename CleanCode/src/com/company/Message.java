@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Timestamp;
 import org.json.JSONException;
@@ -69,8 +70,8 @@ public class Message implements Comparable {
                 '}';
     }
 
-    public void readFromFile(File file)
-    {
+    public void readFromFile(File file) throws IOException {
+        FileWriter fileWriter = new FileWriter(file, true);
         try {
             JsonFactory factory = new JsonFactory();
             JsonParser parser = factory.createParser(file);
@@ -95,12 +96,16 @@ public class Message implements Comparable {
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+            fileWriter.write("FileNotFoundException");
         } catch (IOException e) {
             e.printStackTrace();
+            fileWriter.write("IOException");
         } catch (ClassCastException e) {
             e.printStackTrace();
+            fileWriter.write("ClassCastException");
         }catch (NullPointerException e){
             e.printStackTrace();
+            fileWriter.write("NullPointerException");
         }
     }
 
