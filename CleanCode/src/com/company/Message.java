@@ -50,11 +50,17 @@ public class Message implements Comparable {
         this.message = message;
     }
 
-    public Message(String id, String author, String message, Timestamp timestamp) {
-        this.id = id;
-        this.author = author;
-        this.timestamp = timestamp;
-        this.message = message;
+    public Message (String id, String author, String message, Timestamp timestamp) {
+            Generator generator = new Generator();
+        try{
+            message = generator.messageLength(message);
+            this.id = id;
+            this.author = author;
+            this.timestamp = timestamp;
+            this.message = message;
+        }catch (MessageException me){
+            System.out.println("Message is longer than 140 symbols");
+        }
     }
 
     public Message() {
@@ -111,16 +117,16 @@ public class Message implements Comparable {
 
     public JSONObject createJsonObject()
     {
-        JSONObject res = new JSONObject();
+        JSONObject jsonObject = new JSONObject();
         try {
-            res.put("id", this.id);
-            res.put("author", this.author);
-            res.put("timestamp", this.timestamp);
-            res.put("message", this.message);
+            jsonObject.put("id", this.id);
+            jsonObject.put("author", this.author);
+            jsonObject.put("timestamp", this.timestamp);
+            jsonObject.put("message", this.message);
         }catch (JSONException e){
             e.printStackTrace();
         }
-        return res;
+        return jsonObject;
     }
 
     @Override
