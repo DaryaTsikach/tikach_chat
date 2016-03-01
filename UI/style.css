@@ -1,0 +1,142 @@
+body {
+  font-family: Arial, Verdana,  sans-serif;
+  font-size: 24pt; 
+  background-color: #f0f0f0; 
+  color: #333; 
+}
+h1 {
+  color: #a52a2a; 
+  font-size: 24pt; 
+  font-family: Georgia, Times, serif; 
+  font-weight: normal; 
+  text-align:center;
+}
+
+.message{
+   margin:25px;
+   padding:5px;
+   display: inline-block;
+   clear: both;
+   max-width: 500px;
+}
+.message.message-incoming{
+   float:left;
+   border-left:3px solid #000000;
+   border-bottom:3px solid #000000;
+   border-right:3px solid #000000;
+   border-top:3px solid #000000;
+   border-top-right-radius:15px;
+   border-bottom-left-radius:0px;
+   border-bottom-right-radius:15px;
+   border-top-left-radius:15px;
+   background-color:silver;
+   color:black;
+   margin-left:5px;
+   margin-right:5px;
+   margin-top:5px;
+   margin-bottom:5px;
+}
+
+.message.message-outcoming{
+    float:right;
+    border-left:3px solid #000000;
+   border-bottom:3px solid #000000;
+   border-right:3px solid #000000;
+   border-top:3px solid #000000;
+  border-top-right-radius:15px;
+   border-bottom-left-radius:15px;
+   border-bottom-right-radius:0px;
+   border-top-left-radius:15px;
+   margin-left:5px;
+   margin-right:5px;
+   margin-top:5px;
+   margin-bottom:5px;
+   text-align: right;
+   background-color:#385bce;
+   color:white;
+}
+.badge { 
+font-size: 10pt; 
+clear: both; 
+} 
+.badge-incoming { 
+float: left; 
+color: grey;
+}
+.badge-outcoming{
+    float:right;
+    color:#385bce;
+}
+.message.chat-button{
+                   height:41px;
+                   margin-top:-10px;           
+}
+.message.new-message{
+    text-align:center;
+    align-content:center;
+}
+div.history{
+    width: 1000px;
+	height: 500px;
+	padding: 10px;
+	border: 10px solid #eaeaea;
+	box-sizing: border-box;
+    align-content:center;
+    margin-left:100px;
+    margin-top:10px;
+   overflow:scroll;
+    justify-content:center;
+}
+.newMessage{
+    display:inline-block;
+   position:relative;
+   margin-left:100px;
+}
+
+button.sendMessage{
+ position:absolute;
+ bottom:10px;
+ right:10px;
+}
+.error{
+    margin-top:10px;
+    text-align:center;
+    image-orientation:from-image;
+}
+
+.control {
+clear: both;
+font-size:9pt;
+}
+.control-outcoming {
+float: right;
+}
+.control-incoming{
+    float:left;
+    font-style:italic;
+}
+
+.remove{
+      float:left;
+   border-left:3px solid #000000;
+   border-bottom:3px solid #000000;
+   border-right:3px solid #000000;
+   border-top:3px solid #000000;
+   border-top-right-radius:15px;
+   border-bottom-left-radius:0px;
+   border-bottom-right-radius:15px;
+   border-top-left-radius:15px;
+   background-color:#d05757;
+   color:white;
+   margin-left:5px;
+   margin-right:5px;
+   margin-top:5px;
+   margin-bottom:5px;
+   font-style:italic;
+}
+.username{
+    font-size:15pt;
+    text-align:center;
+    margin-top:-15px;
+    align-content:center;
+}
