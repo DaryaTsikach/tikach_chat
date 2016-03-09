@@ -1,63 +1,86 @@
 <html>
 <head>
-<title>Chat</title>
-    <link rel="stylesheet" href="ch.css">
+    <meta charset="utf-8">
+    <title>Chat</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
         <h1> Enjoy my Tikachat</h1>
         <div class="username"> 
-            <input type="text" placeholder="Enter your name..." value="Tsikachka">
-            <button>Change</button> 
+            <input type="text" id="nickname" placeholder="Enter your name..." value="Tsikachka">
+            <button class="changeName" id="changeName">Change</button>
         </div>
-       <div class="history">
+       <div class="history" id="history">
            <div class="message message-incoming">Hello!</div>
-           <div class="badge badge-incoming">Бочер</div>
-           <div class="message message-outcoming">Hi!</div> 
+           <div class="badge badge-incoming">Р‘РѕС‡РµСЂ</div>
+           <div>
+           <div class="message message-outcoming">Hi!</div>
            <div class="badge badge-outcoming">Tikachka</div>
-           <div class="control control-outcoming"><a href="#">Delete</a>/<a href="#">Edit</a></div>
+           <div class="control control-outcoming">
+               <div class="delete-my-msg"><a href="#">Delete</a>/</div>
+               <div class="edit-my-msg"><a href="#">Edit</a></div>
+           </div></div>
  
            <div class="message message-incoming">How are you?</div>
-           <div class="badge badge-incoming">Бочер</div>
+           <div class="badge badge-incoming">Р‘РѕС‡РµСЂ</div>
+        <div>
            <div class="message message-outcoming">Cool!</div> 
            <div class="badge badge-outcoming">Tikachka</div>
-           <div class="control control-outcoming"><a href="#">Delete</a>/<a href="#">Edit</a></div>
+           <div class="control control-outcoming">
+               <div class="delete-my-msg"><a href="#">Delete</a>/</div>
+               <div class="edit-my-msg"><a href="#">Edit</a></div>
+           </div></div>
    
            <div class="message message-incoming">goodbye!</div>
-           <div class="badge badge-incoming">Бочер</div>
+           <div class="badge badge-incoming">Р‘РѕС‡РµСЂ</div>
+        <div>
            <div class="message message-outcoming">chao!</div> 
            <div class="badge badge-outcoming">Tikachka</div>
-           <div class="control control-outcoming"><a href="#">Delete</a>/<a href="#">Edit</a></div>
+           <div class="control control-outcoming">
+               <div class="delete-my-msg"><a href="#">Delete</a>/</div>
+               <div class="edit-my-msg"><a href="#">Edit</a></div>
+           </div> </div>
         
            <div class="message message-incoming">goodbye!</div>   
-           <div class="message remove">Message was deleted</div>     
+           <div class="message remove-incoming">Message was deleted</div>
            <div class="message message-incoming">goodbye!</div>
            <div class="control control-incoming">Message was edited</div>
-           <div class="badge badge-incoming">Бочер</div>
-           
+           <div class="badge badge-incoming">Р‘РѕС‡РµСЂ</div>
 
+        <div>
            <div class="message message-outcoming">chao!</div> 
            <div class="badge badge-outcoming">Tikachka</div>
-           <div class="control control-outcoming"><a href="#">Delete</a>/<a href="#">Edit</a></div>
+           <div class="control control-outcoming">
+               <div class="delete-my-msg"><a href="#">Delete</a>/</div>
+               <div class="edit-my-msg"><a href="#">Edit</a></div>
+           </div>
+            </div>
          
            <div class="message message-incoming">goodbye!</div>
-           <div class="badge badge-incoming">Бочер</div>
+           <div class="badge badge-incoming">Р‘РѕС‡РµСЂ</div>
+        <div>
            <div class="message message-outcoming">chao!</div> 
            <div class="badge badge-outcoming">Tikachka</div>
-           <div class="control control-outcoming"><a href="#">Delete</a>/<a href="#">Edit</a></div>
+           <div class="control control-outcoming">
+               <div class="delete-my-msg"><a href="#">Delete</a>/</div>
+               <div class="edit-my-msg"><a href="#">Edit</a></div>
+           </div>
+            </div>
        </div>
         
     <div class="newMessage">
         <textarea name="" id="txt" cols="139" rows="5" placeholder="Enter new message..."></textarea>
-        <button class="sendMessage">Submit</button>
+        <button class="sendMessage" id="sendMsgBtn">Submit</button>
     </div>
 
-    <div class="error">
+    <div class="error" id="badserver">
         <img src="stiker.jpg" />
         <p>Server error!</p>
     </div>
            
-
+    <script type="text/javascript" src="jquery-1.12.1.min.js"></script>
+    <script type="text/javascript" src="scripts.js"></script>
 </body>
 </html>
 
