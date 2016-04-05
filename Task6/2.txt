@@ -1,0 +1,15 @@
+GET http://192.168.0.102:999/chat?token=TN27EN HTTP/1.1
+Host: 192.168.0.102:999
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:47.0) Gecko/20100101 Firefox/47.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+
+
+HTTP/1.1 200 OK
+Date: Tue, 05 Apr 2016 20:09:00 GMT
+Access-control-allow-origin: *
+Content-length: 46
+
+{"messages":["How are you?"],"token":"TN35EN"}
