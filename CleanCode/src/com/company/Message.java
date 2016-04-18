@@ -1,15 +1,12 @@
 package com.company;
 
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonToken;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Timestamp;
-import org.json.JSONException;
-import org.json.JSONObject;
+import org.json.*;
+import com.fasterxml.jackson.core.*;
 
 public class Message implements Comparable {
     private String id;
@@ -87,6 +84,7 @@ public class Message implements Comparable {
                     String fieldName = parser.getCurrentName();
                     jsonToken = parser.nextToken();
                     if ("id".equals(fieldName)) {
+                        this.setId(parser.getValueAsString());
                         this.setId(parser.getValueAsString());
                     } else if ("author".equals(fieldName)) {
                         this.setAuthor(parser.getValueAsString());

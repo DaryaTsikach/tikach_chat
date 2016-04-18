@@ -1,1 +1,6 @@
 end chat2016-02-21 16:56:01.569
+downloaded messages from file2016-04-18 21:25:08.132
+new message: {"id":"564", "author":"me", "timestamp":"2016-04-18 21:25:08.132, "message":"hello"}
+messages sorted2016-04-18 21:25:08.132
+save1messages to file2016-04-18 21:25:08.132
+downloaded messages from file2016-04-18 21:25:08.132
