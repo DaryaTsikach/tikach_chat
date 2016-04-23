@@ -1,23 +1,32 @@
 body {
   font-family: Arial, Verdana,  sans-serif;
-  font-size: 24pt; 
+  font-size: 1.5em;
   background-color: #f0f0f0; 
-  color: #333; 
+  color: #333;
+    width: 90%;
+    height: 90%;
+    position: absolute;
+    margin-left:auto;
+    margin-right: auto;
+    overflow: auto;
 }
 h1 {
   color: #a52a2a; 
-  font-size: 24pt; 
+  font-size: 1.5em;
   font-family: Georgia, Times, serif; 
   font-weight: normal; 
   text-align:center;
 }
 
 .message{
-   margin:25px;
-   padding:5px;
+  /* margin:25px;
+   padding:5px;*/
+    margin:5%;
+    padding:1%;
    display: inline-block;
    clear: both;
-   max-width: 500px;
+    max-width: 40%;
+  /* max-width: 500px;*/
 }
 .message.message-incoming{
    float:left;
@@ -31,10 +40,10 @@ h1 {
    border-top-left-radius:15px;
    background-color:silver;
    color:black;
-   margin-left:5px;
-   margin-right:5px;
-   margin-top:5px;
-   margin-bottom:5px;
+    margin-left:0%;
+    margin-right:0%;
+    margin-top:0%;
+    margin-bottom:0%;
 }
 
 .message.message-outcoming{
@@ -47,16 +56,16 @@ h1 {
    border-bottom-left-radius:15px;
    border-bottom-right-radius:0px;
    border-top-left-radius:15px;
-   margin-left:5px;
-   margin-right:5px;
-   margin-top:5px;
-   margin-bottom:5px;
+    margin-left:0.5%;
+    margin-right:0.5%;
+    margin-top:0.5%;
+    margin-bottom:0.5%;
    text-align: right;
    background-color:#385bce;
    color:white;
 }
 .badge { 
-font-size: 10pt; 
+font-size: 0.625em;
 clear: both; 
 } 
 .badge-incoming { 
@@ -71,42 +80,46 @@ color: grey;
                    height:41px;
                    margin-top:-10px;           
 }
-.message.new-message{
-    text-align:center;
-    align-content:center;
+.newMessage{
+    width:100%;
+    height: auto;
+}
+textarea{
+    width: 100%;
+    height: 5%;
+    resize: none;
+
 }
 div.history{
-    width: 1000px;
-	height: 500px;
-	padding: 10px;
+    width: 100%;
+	height: 80%;
+	padding: 2%;
 	border: 10px solid #eaeaea;
 	box-sizing: border-box;
     align-content:center;
-    margin-left:100px;
-    margin-top:10px;
+    margin-left:5%;
+    margin-top:5%;
    overflow:scroll;
     justify-content:center;
 }
 .newMessage{
     display:inline-block;
    position:relative;
-   margin-left:100px;
+   margin-left:5%;
 }
 
 button.sendMessage{
  position:absolute;
- bottom:10px;
- right:10px;
 }
 .error{
-    margin-top:10px;
+    margin-top:2%;
     text-align:center;
     image-orientation:from-image;
 }
 
 .control {
 clear: both;
-font-size:9pt;
+    font-size: 0.5625em;
 }
 .control-outcoming {
 float: right;
@@ -129,10 +142,10 @@ float: right;
    border-top-left-radius:15px;
    background-color:#d05757;
    color:white;
-   margin-left:5px;
-   margin-right:5px;
-   margin-top:5px;
-   margin-bottom:5px;
+    margin-left:0.5%;
+    margin-right:0.5%;
+    margin-top:0.5%;
+    margin-bottom:0.5%;
    font-style:italic;
 }
 .remove-outcoming{
@@ -147,15 +160,15 @@ float: right;
     border-top-left-radius:15px;
     background-color:#d05757;
     color:white;
-    margin-left:5px;
-    margin-right:5px;
-    margin-top:5px;
-    margin-bottom:5px;
+    margin-left:0.5%;
+    margin-right:0.5%;
+    margin-top:0.5%;
+    margin-bottom:0.5%;
     font-style:italic;
 }
 .username{
-    font-size:15pt;
+    font-size:0.9375em;
     text-align:center;
-    margin-top:-15px;
+    margin-top:-3%;
     align-content:center;
 }
