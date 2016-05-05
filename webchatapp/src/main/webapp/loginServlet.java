@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Formatter;
 import java.util.Scanner;
 
@@ -17,12 +18,17 @@ import java.util.Scanner;
  * Created by Даша on 04.05.2016.
  */
 @WebServlet(value = "/login")
+
 public class loginServlet extends HttpServlet{
+
     boolean userExist(String log, String pass) throws IOException {
-        String search = log + " " + pass;
-        Scanner in = new Scanner(new File("D:\\Daria\\github\\webchatapp\\users.txt"));
+        Scanner in = new Scanner(new File("D:\\Daria\\github\\webchatapp\\users.txt")); //без полного пути не находит файл в проекте, не знаю почему
+        ArrayList<User> list = new ArrayList<User>();
         while(in.hasNext()){
-            if(in.nextLine().equals(search)){
+            list.add(new User(in.next(), in.next()));
+        }
+        for(User u: list){
+            if(u.getUsername().equals(log) && u.getPassword().equals(pass)){
                 return true;
             }
         }
