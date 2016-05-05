@@ -6,10 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.io.IOException;
-import org.json.JSONArray;
-
-
-
+import com.google.gson.*;
 
 public class Main {
     public static void main(String[] args) throws IOException  {
@@ -23,6 +20,7 @@ public class Main {
         FileWriter writer = new FileWriter(logFile, true);
         Date date = new Date();
         Timestamp timestamp;
+        Gson gson = new GsonBuilder().create();
         System.out.println("Enter 'd' to download message from file," +
                     "\n 's' to save messages to file," +
                     "\n 'a' to add new message," +
@@ -37,25 +35,23 @@ public class Main {
             while(true) {
                 switch (choose = in.next()) {
                     case "d": //downloading from file
-                            Message msg = new Message();
-                            msg.readFromFile(file);
+                            Reader reader = new InputStreamReader(new FileInputStream(file));
+                            Message[] list = gson.fromJson(reader, Message[].class);
+                            if(list != null) {
+                                Collections.addAll(messages, list);
+                            }
+                            reader.close();
+                            for(Message m: messages){
+                                System.out.println(m.toString());
+                            }
                             timestamp = new Timestamp(date.getTime());
                             writer.write("downloaded messages from file" + timestamp.toString()+'\n');
                             writer.flush();
                         break;
 
                     case "s": //saving to file
-                            FileWriter fileWriter = new FileWriter(file, false);
-                            JSONArray jsonArray = new JSONArray();
-                            for(Message mess: messages){
-                                jsonArray.put(mess.createJsonObject());
-                            }
-                            fileWriter.write(jsonArray.toString());
-                            fileWriter.flush();
-
-                            for(int i = 0; i < jsonArray.length(); ++i) {
-                                jsonArray.remove(i);
-                            }
+                            Writer wr = new OutputStreamWriter(new FileOutputStream(file));
+                            gson.toJson(messages, wr);
                             timestamp = new Timestamp(date.getTime());
                             writer.write("save" + messages.size()
                                          + "messages to file" + timestamp.toString()+'\n');
@@ -77,7 +73,7 @@ public class Main {
                         break;
 
                     case "t": //sorting
-                            Collections.sort(messages);
+                            Collections.sort(messages); //by timestamp
                             for (Message m : messages) {
                                 System.out.println(m.toString());
                             }

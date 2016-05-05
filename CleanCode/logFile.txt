@@ -4,3 +4,13 @@ new message: {"id":"564", "author":"me", "timestamp":"2016-04-18 21:25:08.132, "
 messages sorted2016-04-18 21:25:08.132
 save1messages to file2016-04-18 21:25:08.132
 downloaded messages from file2016-04-18 21:25:08.132
+new message: {"id":"41", "author":"user1", "timestamp":"2016-05-05 18:22:27.772", "message":"hello"}
+save1messages to file2016-05-05 18:22:27.772
+downloaded messages from file2016-05-05 18:25:15.603
+new message: {"id":"41", "author":"user", "timestamp":"2016-05-05 18:25:15.603", "message":"hi"}
+save1messages to file2016-05-05 18:25:15.603
+downloaded messages from file2016-05-05 18:25:15.603
+new message: {"id":"45", "author":"user1", "timestamp":"2016-05-05 18:25:15.603", "message":"hello"}
+save2messages to file2016-05-05 18:25:15.603
+downloaded messages from file2016-05-05 18:25:15.603
+messages sorted2016-05-05 18:25:15.603

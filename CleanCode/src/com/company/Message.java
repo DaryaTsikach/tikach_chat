@@ -1,12 +1,9 @@
 package com.company;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.sql.Timestamp;
-import org.json.*;
-import com.fasterxml.jackson.core.*;
+import com.google.gson.*;
+import com.google.gson.stream.JsonReader;
 
 public class Message implements Comparable {
     private String id;
@@ -68,64 +65,11 @@ public class Message implements Comparable {
         return "{" +
                 "\"id\":\"" + id + "\"" +
                 ", \"author\":\"" + author + "\"" +
-                ", \"timestamp\":\"" + timestamp.toString() +
+                ", \"timestamp\":\"" + timestamp + "\"" +
                 ", \"message\":\"" + message + "\"" +
                 '}';
     }
 
-    public void readFromFile(File file) throws IOException {
-        FileWriter fileWriter = new FileWriter(file, true);
-        try {
-            JsonFactory factory = new JsonFactory();
-            JsonParser parser = factory.createParser(file);
-            while(!parser.isClosed()) {
-                JsonToken jsonToken = parser.nextToken();
-                if (JsonToken.FIELD_NAME.equals(jsonToken)) {
-                    String fieldName = parser.getCurrentName();
-                    jsonToken = parser.nextToken();
-                    if ("id".equals(fieldName)) {
-                        this.setId(parser.getValueAsString());
-                        this.setId(parser.getValueAsString());
-                    } else if ("author".equals(fieldName)) {
-                        this.setAuthor(parser.getValueAsString());
-                    }
-                    else if("timestamp".equals(fieldName)){
-                        this.setTimestamp(Timestamp.valueOf(parser.getValueAsString()));
-                        System.out.println(this.toString());
-                    }
-                    else if("message".equals(fieldName)){
-                        this.setMessage(parser.getValueAsString());
-                    }
-                }
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            fileWriter.write("FileNotFoundException");
-        } catch (IOException e) {
-            e.printStackTrace();
-            fileWriter.write("IOException");
-        } catch (ClassCastException e) {
-            e.printStackTrace();
-            fileWriter.write("ClassCastException");
-        }catch (NullPointerException e){
-            e.printStackTrace();
-            fileWriter.write("NullPointerException");
-        }
-    }
-
-    public JSONObject createJsonObject()
-    {
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("id", this.id);
-            jsonObject.put("author", this.author);
-            jsonObject.put("timestamp", this.timestamp);
-            jsonObject.put("message", this.message);
-        }catch (JSONException e){
-            e.printStackTrace();
-        }
-        return jsonObject;
-    }
 
     @Override
     public int compareTo(Object o) {
