@@ -77,6 +77,7 @@ sendMsgBtn.onclick = function() {
 };
 
 changeName.onclick = function(){
+
     var newName = document.getElementById('nickname');
     myName = newName.value;
 };

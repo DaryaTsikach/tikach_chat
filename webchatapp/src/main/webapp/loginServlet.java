@@ -22,7 +22,9 @@ import java.util.Scanner;
 public class loginServlet extends HttpServlet{
 
     boolean userExist(String log, String pass) throws IOException {
-        Scanner in = new Scanner(new File("D:\\Daria\\github\\webchatapp\\users.txt")); //без полного пути не находит файл в проекте, не знаю почему
+        String path = getServletContext().getRealPath("/");
+        path += "users.txt";
+        Scanner in = new Scanner(new File(path));
         ArrayList<User> list = new ArrayList<User>();
         while(in.hasNext()){
             list.add(new User(in.next(), in.next()));
