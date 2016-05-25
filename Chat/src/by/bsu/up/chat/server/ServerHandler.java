@@ -32,7 +32,7 @@ public class ServerHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         Response response;
-
+        messageStorage.loadMessages();
         try {
             response = dispatch(httpExchange);
         } catch (Throwable e) {
@@ -91,51 +91,37 @@ public class ServerHandler implements HttpHandler {
 
     private Response doPost(HttpExchange httpExchange) {
         try {
-            Message message = MessageHelper.getClientMessage(httpExchange.getRequestBody());
+            Message message = MessageHelper.getClientMessage(httpExchange.getRequestBody(),true);
             logger.info(String.format("Received new message from user: %s", message));
             messageStorage.addMessage(message);
-            messageStorage.saveMessages();
             return Response.ok();
         } catch (ParseException e) {
-            logger.error("Error while parsing", e);
+            logger.error("Could not parse message.", e);
             return new Response(Constants.RESPONSE_CODE_BAD_REQUEST, "Incorrect request body");
         }
     }
 
     private Response doPut(HttpExchange httpExchange) {
         try {
-            Message message = MessageHelper.getClientMessage(httpExchange.getRequestBody(), false);
-            if (messageStorage.updateMessage(message)) {
-                messageStorage.saveMessages();
-                logger.info(String.format("Editing message by id: %s with text: %s", message.getId(), message.getText()));
-                return Response.ok();
-            } else {
-                logger.info(String.format("Problem with editing message by id: %s", message.getId()));
-                return Response.withCode(Constants.RESPONSE_CODE_BAD_REQUEST);
-            }
+            Message message = MessageHelper.getClientMessage(httpExchange.getRequestBody(),false);
+            messageStorage.updateMessage(message);
+            return Response.ok();
         } catch (ParseException e) {
-            logger.error("Error while parsing", e);
+            logger.error("Could not parse message.", e);
             return new Response(Constants.RESPONSE_CODE_BAD_REQUEST, "Incorrect request body");
         }
     }
 
     private Response doDelete(HttpExchange httpExchange) {
         try {
-            String id = MessageHelper.getDeleteParam(httpExchange.getRequestBody());
-            if (messageStorage.removeMessage(id)) {
-                logger.info(String.format("Removed message by id: %s", id));
-                messageStorage.saveMessages();
-                return Response.ok();
-            } else {
-                logger.info(String.format("Error while deleting by id: %s", id));
-                return Response.withCode(Constants.RESPONSE_CODE_BAD_REQUEST);
-            }
+            Message message = MessageHelper.getClientMessage(httpExchange.getRequestBody(),false);
+            messageStorage.removeMessage(message.getId());
+            return Response.ok();
         } catch (ParseException e) {
-            logger.error("Error while deleting by id", e);
+            logger.error("Could not parse message.", e);
             return new Response(Constants.RESPONSE_CODE_BAD_REQUEST, "Incorrect request body");
         }
     }
-
     private Response doOptions(HttpExchange httpExchange) {
         httpExchange.getResponseHeaders().add(Constants.REQUEST_HEADER_ACCESS_CONTROL_METHODS,Constants.HEADER_VALUE_ALL_METHODS);
         return Response.ok();
@@ -144,11 +130,9 @@ public class ServerHandler implements HttpHandler {
     private void sendResponse(HttpExchange httpExchange, Response response) {
         try (OutputStream os = httpExchange.getResponseBody()) {
             byte[] bytes = response.getBody().getBytes();
-
-            Headers headers = httpExchange.getResponseHeaders();
-            headers.add(Constants.REQUEST_HEADER_ACCESS_CONTROL_ORIGIN,"*");
-            httpExchange.sendResponseHeaders(response.getStatusCode(), bytes.length);
-
+            Headers headers = httpExchange.getResponseHeaders(); // !!!
+            headers.add("Access-Control-Allow-Origin","*");      // !!!
+            httpExchange.sendResponseHeaders(200, bytes.length);
             os.write( bytes);
             // there is no need to close stream manually
             // as try-catch with auto-closable is used

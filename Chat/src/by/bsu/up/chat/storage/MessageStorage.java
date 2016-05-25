@@ -2,6 +2,9 @@ package by.bsu.up.chat.storage;
 
 import by.bsu.up.chat.common.models.Message;
 
+import javax.json.JsonArray;
+import javax.json.JsonObject;
+import java.io.IOException;
 import java.util.List;
 
 public interface MessageStorage {
@@ -36,5 +39,9 @@ public interface MessageStorage {
     /**
      * @return the amount of stored messages
      */
+
+
+    void loadMessages();
+    void saveMessages(List<Message> messages ) throws IOException;
     int size();
 }

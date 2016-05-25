@@ -11,6 +11,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import javax.json.JsonObject;
+import javax.json.stream.JsonParser;
 import java.io.*;
 import java.util.LinkedList;
 import java.util.List;
@@ -84,7 +86,7 @@ public class MessageHelper {
         jsonObject.put(MESSAGE_PART_TOKEN, buildToken(lastPosition));
         return jsonObject.toJSONString();
     }
-
+    @SuppressWarnings("unchecked")
     private static JSONArray getJsonArrayOfMessages(List<Message> messages) {
 
         // Java * approach
@@ -111,17 +113,20 @@ public class MessageHelper {
         return jsonObject.toJSONString();
     }
 
-    public static Message getClientMessage(InputStream inputStream) throws ParseException {
+    public static Message getClientMessage(InputStream inputStream,boolean isPost) throws ParseException {
         JSONObject jsonObject = stringToJsonObject(inputStreamToString(inputStream));
-        String id = ((String) jsonObject.get(Constants.Message.FIELD_ID));
-        String author = ((String) jsonObject.get(Constants.Message.FIELD_AUTHOR));
-        long timestamp = ((long) jsonObject.get(Constants.Message.FIELD_TIMESTAMP));
-        String text = ((String) jsonObject.get(Constants.Message.FIELD_TEXT));
         Message message = new Message();
+        String id = ((String) jsonObject.get(Constants.Message.FIELD_ID));
+        //long timestamp = Long.getLong(jsonObject.get(Constants.Message.FIELD_TIMESTAMP).toString());
+        String text = ((String) jsonObject.get(Constants.Message.FIELD_TEXT));
         message.setId(id);
-        message.setAuthor(author);
-        message.setTimestamp(timestamp);
         message.setText(text);
+        if (isPost){
+            long timestamp = ((long) jsonObject.get(Constants.Message.FIELD_TIMESTAMP));
+            String author = ((String) jsonObject.get(Constants.Message.FIELD_AUTHOR));
+            message.setAuthor(author);
+            message.setTimestamp(timestamp);
+        }
         return message;
     }
 
@@ -143,13 +148,14 @@ public class MessageHelper {
             throw new RuntimeException(e);
         }
     }
-
+    @SuppressWarnings("unchecked")
     private static JSONObject messageToJSONObject(Message message) {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put(Constants.Message.FIELD_ID, message.getId());
         jsonObject.put(Constants.Message.FIELD_AUTHOR, message.getAuthor());
         jsonObject.put(Constants.Message.FIELD_TIMESTAMP, message.getTimestamp());
         jsonObject.put(Constants.Message.FIELD_TEXT, message.getText());
+        jsonObject.put(Constants.Message.FIELD_IS_EDIT,message.getIsEdit());
         return jsonObject;
     }
 }

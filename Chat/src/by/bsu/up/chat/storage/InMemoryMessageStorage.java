@@ -3,19 +3,22 @@ package by.bsu.up.chat.storage;
 import by.bsu.up.chat.common.models.Message;
 import by.bsu.up.chat.logging.Logger;
 import by.bsu.up.chat.logging.impl.Log;
-import
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import javax.json.*;
+
 
 public class InMemoryMessageStorage implements MessageStorage {
 
     private static final String DEFAULT_PERSISTENCE_FILE = "messages.srg";
-    private static final String LOG_JSON = "log.json";
 
     private static final Logger logger = Log.create(InMemoryMessageStorage.class);
 
     private List<Message> messages = new ArrayList<>();
+
 
     @Override
     public synchronized List<Message> getPortion(Portion portion) {
@@ -32,27 +35,46 @@ public class InMemoryMessageStorage implements MessageStorage {
     }
 
     @Override
-    public void addMessage(Message message) {
+    public void addMessage(Message message)  {
         messages.add(message);
+        try{
+            saveMessages(messages);
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
     @Override
     public boolean updateMessage(Message message) {
-        for (Message m : messages)
-            if (m.getId().equals(message.getId()) && !m.getState().equals("edit")) {
-                addMessage(new Message(m.getId(), m.getAuthor(), System.currentTimeMillis(), message.getMessage(), "edit"));
+        for (int i = 0; i<messages.size();i++){
+            if (messages.get(i).getId().equals(message.getId())){
+                messages.get(i).setText(message.getText());
+                messages.get(i).setIsEdit("was edited");
+                try {
+                    saveMessages(messages);
+                }catch (IOException e){
+                    e.printStackTrace();
+                }
                 return true;
             }
+        }
         return false;
     }
 
     @Override
     public synchronized boolean removeMessage(String messageId) {
-        for (Message m : messages)
-            if (m.getId().equals(messageId) && !m.getStatus().equals("delete")) {
-                addMessage(new Message(m.getId(), m.getAuthor(), System.currentTimeMillis(), "Message was deleted", "delete"));
+        for (int i = 0; i<messages.size(); i++){
+            if (messages.get(i).getId().equals(messageId)){
+                messages.get(i).setText("DELETED");
+                try {
+                    saveMessages(messages);
+                }catch (IOException e){
+                    e.printStackTrace();
+                }
                 return true;
             }
+        }
         return false;
     }
 
@@ -61,36 +83,55 @@ public class InMemoryMessageStorage implements MessageStorage {
         return messages.size();
     }
 
-    @Override
-    public void saveMessages() {
+    public  void loadMessages(){
         try {
-            FileWriter fileWriter = new FileWriter(file, false);
-            JSONArray jsonArray = new JSONArray();
-            for(Message mess: messages){
-                jsonArray.put(mess.createJsonObject());
+            JsonArray forArray = getJson();
+            if (!forArray.isEmpty()){
+                JsonArray array = forArray.getJsonArray(0);
+                messages.clear();
+                for (int i = 0; i < array.size(); i++) {
+                    JsonObject tmpObject = array.getJsonObject(i);
+                    Message tempMessage = new Message(tmpObject);
+                    messages.add(tempMessage);
+                }
             }
-            fileWriter.write(jsonArray.toString());
-            fileWriter.flush();
-
-            for(int i = 0; i < jsonArray.length(); ++i) {
-                jsonArray.remove(i);
-            }
-            timestamp = new Timestamp(date.getTime());
-            writer.write("save" + messages.size()
-                    + "messages to file" + timestamp.toString()+'\n');
-            writer.flush();
-        } catch (IOException e) {
-            logger.error("Error while saving", e);
+        } catch (IOException e){
+            e.printStackTrace();
         }
     }
 
-    @Override
-    public void loadMessages() {
-        try {
-            Message m = new Message();
-            messages = m.readFromFile(LOG_JSON);
-        } catch (IOException e) {
-            logger.error("Error while loading", e);
+
+    public static JsonArray getJson() throws IOException {
+        List<String> list= Files.readAllLines(Paths.get("history.json"));
+        String JSONData = list.toString();
+        JsonReader forRead = Json.createReader(new StringReader(JSONData));
+        JsonArray forArray = forRead.readArray();
+        forRead.close();
+        return forArray;
+    }
+
+    public void saveMessages(List<Message> messages ) throws  IOException{
+        if (!messages.isEmpty()) {
+            FileWriter out = new FileWriter("history.json");
+            JsonWriter writeHistory = Json.createWriter(out);
+            JsonArrayBuilder jsonHistory = Json.createArrayBuilder();
+            for (Message i : messages) {
+                jsonHistory.add(toJson(i));
+            }
+            JsonArray arr = jsonHistory.build();
+            writeHistory.writeArray(arr);
+            out.close();
+            writeHistory.close();
         }
+    }
+
+
+    public static JsonObject toJson(Message aHistory) {
+        return Json.createObjectBuilder().add("id", aHistory.getId())
+                .add("author", aHistory.getAuthor())
+                .add("timestamp", aHistory.getTimestamp())
+                .add("message", aHistory.getText())
+                .add("isEdit",aHistory.getIsEdit()).build();
+
     }
 }
